@@ -17,5 +17,4 @@ class Game
     private:
         std::vector<Player> players;
 };
-
 #endif // GAME_H

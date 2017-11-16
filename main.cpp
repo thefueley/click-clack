@@ -14,13 +14,9 @@ int main()
 
     Player me(human, 5);
     Player comp("CPU", 5);
-    std::cout << "local human address: " << &me << std::endl;
-    std::cout << "local comp address: " << &comp << std::endl;
 
     Game crapshoot(me, comp);
-    std::cout << "crapshoot address: " << &crapshoot << std::endl;
     Player &meme = crapshoot.getPlayer("human");
-    std::cout << "local human address: " << &meme << std::endl;
 
     char mymove;
     do

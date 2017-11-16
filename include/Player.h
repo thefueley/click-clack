@@ -14,7 +14,6 @@ class Player
         Player(std::string, int);
         Player(const Player&);
         Player& operator=(const Player&);
-        ~Player();
 
         void removePlayerCash(int);
 
