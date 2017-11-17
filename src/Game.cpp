@@ -45,19 +45,27 @@ Player& Game::getPlayer(std::string player)
 
 void Game::comeoutMsg() const
 {
+    showScore();
     std::cout << "You may A) ante\tQ) quit\n";
 }
 
 void Game::pointMsg() const
 {
+    showScore();
     std::cout << "POINT: " << marker << std::endl;
     std::cout << "You may A) ante\tR) roll\n";
+}
+
+void Game::comeoutRollMsg() const
+{
+    std::cout << "POINT: NOT SET" << std::endl;
+    std::cout << "R) to roll.\n";
 }
 
 void Game::rollMsg() const
 {
     std::cout << "POINT: " << marker << std::endl;
-    std::cout << "You may R) roll\n";
+    std::cout << "Locked in. Try to hit your point. R) to roll.\n";
 }
 
 void Game::rollDice()
@@ -79,9 +87,10 @@ void Game::rollDice()
     diceroll[1] = compGuess;
 }
 
-void Game::computeOutcome(std::string phase)
+void Game::computeOutcome(std::string ph)
 {
     int result = diceroll[0] + diceroll[1];
+    std::string phase = ph;
     if (phase == "comeout")
     {
         switch(result)
@@ -156,6 +165,7 @@ void Game::computeOutcome(std::string phase)
             std::cout << "You rolled 7!\nCraps!" << std::endl;
             players[1].player_cash += 2;
             winner = false;
+            phase == "comeout";
         }
         else if (result == marker)
         {

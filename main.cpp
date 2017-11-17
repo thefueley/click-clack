@@ -33,15 +33,22 @@ int main()
                 case 'a' :
                     crapshoot.ante();
 
-                    crapshoot.rollMsg();
+                    //std::cin >> mymove;
+                    //crapshoot.clearInput();
+                    crapshoot.comeoutRollMsg();
                     std::cin >> mymove;
                     crapshoot.clearInput();
                     crapshoot.rollDice();
                     crapshoot.computeOutcome("comeout");
                     if (crapshoot.isWinner())
+                    {
                         phase = "comeout";
+                        crapshoot.showScore();
+                    }
                     else
+                    {
                         phase = "point";
+                    }
                     break;
                 case 'Q' :
                 case 'q' :

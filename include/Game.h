@@ -16,6 +16,7 @@ class Game
 
         void comeoutMsg() const;
         void pointMsg() const;
+        void comeoutRollMsg() const;
         void rollMsg() const;
         void rollDice();
         void computeOutcome(std::string);
