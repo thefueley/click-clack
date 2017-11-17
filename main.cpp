@@ -16,25 +16,61 @@ int main()
     Player comp("CPU", 5);
 
     Game crapshoot(me, comp);
-    Player &meme = crapshoot.getPlayer("human");
 
     char mymove;
+    std::string phase("comeout");
     do
-    {   std::cout << "You may A) ante\tQ) quit\n";
-        std::cin >> mymove;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cin.clear();
-
-        switch(mymove)
+    {
+        if (phase == "comeout")
         {
-            case 'A' :
-            case 'a' :
-                crapshoot.ante(meme);
-                break;
-            case 'Q' :
-            case 'q' :
-                crapshoot.showScore();
-                break;
+            crapshoot.comeoutMsg();
+            std::cin >> mymove;
+            crapshoot.clearInput();
+
+            switch(mymove)
+            {
+                case 'A' :
+                case 'a' :
+                    crapshoot.ante();
+
+                    crapshoot.rollMsg();
+                    std::cin >> mymove;
+                    crapshoot.clearInput();
+                    crapshoot.rollDice();
+                    crapshoot.computeOutcome("comeout");
+                    if (crapshoot.isWinner())
+                        phase = "comeout";
+                    else
+                        phase = "point";
+                    break;
+                case 'Q' :
+                case 'q' :
+                    crapshoot.showScore();
+                    break;
+            }
+        }
+        else // phase = point
+        {
+            crapshoot.pointMsg();
+            std::cin >> mymove;
+            crapshoot.clearInput();
+
+            switch(mymove)
+            {
+                case 'A' :
+                case 'a' :
+                    crapshoot.ante();
+                    break;
+                case 'R' :
+                case 'r' :
+                    crapshoot.rollDice();
+                    crapshoot.computeOutcome("point");
+                    if (crapshoot.isWinner())
+                        phase = "comeout";
+                    else
+                        phase = "point";
+                    break;
+            }
         }
     } while (mymove != 'q' && mymove != 'Q');
     return 0;

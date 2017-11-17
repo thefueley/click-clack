@@ -10,11 +10,23 @@ class Game
         Game() = default;
         Game(Player&, Player&);
 
-        void ante(Player &);
+        void ante();
         void showScore() const;
         Player& getPlayer(std::string);
 
+        void comeoutMsg() const;
+        void pointMsg() const;
+        void rollMsg() const;
+        void rollDice();
+        void computeOutcome(std::string);
+        bool isWinner();
+
+        void clearInput();
+
     private:
         std::vector<Player> players;
+        int diceroll[2];
+        int marker;
+        bool winner;
 };
 #endif // GAME_H

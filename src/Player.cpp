@@ -9,13 +9,13 @@ Player::Player(std::string nm, int dollars) :player_name(nm), player_cash(dollar
 // copy ctor
 Player::Player(const Player& other) : player_name(other.player_name), player_cash(other.player_cash)
 {
-    std::cout << "Player copy constructor was called" << std::endl;
+    //std::cout << "Player copy constructor was called" << std::endl;
 }
 
 // copy-assignment ctor
 Player& Player::operator=(const Player& rhs)
 {
-    std::cout << "Player copy-assignment constructor was called" << std::endl;
+    //std::cout << "Player copy-assignment constructor was called" << std::endl;
     player_name = rhs.player_name;
     player_cash = rhs.player_cash;
     return *this;
