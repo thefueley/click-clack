@@ -21,6 +21,7 @@ class Game
         void rollDice();
         void computeOutcome(std::string);
         bool isWinner();
+        bool beginNewGame() const;
 
         void clearInput();
 
@@ -29,5 +30,6 @@ class Game
         int diceroll[2];
         int marker;
         bool winner;
+        bool newGame;
 };
 #endif // GAME_H

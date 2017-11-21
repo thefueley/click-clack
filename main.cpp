@@ -40,7 +40,7 @@ int main()
                     crapshoot.clearInput();
                     crapshoot.rollDice();
                     crapshoot.computeOutcome("comeout");
-                    if (crapshoot.isWinner())
+                    if (crapshoot.beginNewGame())
                     {
                         phase = "comeout";
                         crapshoot.showScore();
@@ -72,7 +72,7 @@ int main()
                 case 'r' :
                     crapshoot.rollDice();
                     crapshoot.computeOutcome("point");
-                    if (crapshoot.isWinner())
+                    if (crapshoot.beginNewGame())
                         phase = "comeout";
                     else
                         phase = "point";

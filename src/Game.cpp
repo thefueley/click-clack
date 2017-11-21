@@ -99,62 +99,67 @@ void Game::computeOutcome(std::string ph)
             players[1].player_cash += 2;
             std::cout << "You rolled 2!\nYou lose!\n";
             winner = false;
+            newGame = true;
             break;
             case 3 :
             players[1].player_cash += 2;
             std::cout << "You rolled 3!\nYou lose!\n";
             winner = false;
+            newGame = true;
             break;
             case 4 :
-            players[1].player_cash += 2;
             std::cout << "You rolled 4!\n";
             marker = result;
             winner = false;
+            newGame = false;
             break;
             case 5 :
-            players[1].player_cash += 2;
             std::cout << "You rolled 5!\n";
             marker = result;
             winner = false;
+            newGame = false;
             break;
             case 6 :
-            players[1].player_cash += 2;
             std::cout << "You rolled 6!\n";
             marker = result;
             winner = false;
+            newGame = false;
             break;
             case 7 :
             players[0].player_cash += 2;
             std::cout << "You rolled 7!\nYou win!\n";
             winner = true;
+            newGame = true;
             break;
             case 8 :
-            players[1].player_cash += 2;
             std::cout << "You rolled 8!\n";
             marker = result;
             winner = false;
+            newGame = false;
             break;
             case 9 :
-            players[1].player_cash += 2;
             std::cout << "You rolled 9!\n";
             marker = result;
             winner = false;
+            newGame = false;
             break;
             case 10 :
-            players[1].player_cash += 2;
             std::cout << "You rolled 10!\n";
             marker = result;
             winner = false;
+            newGame = false;
             break;
             case 11 :
             players[0].player_cash += 2;
             std::cout << "You rolled 11!\nYou win!\n";
             winner = true;
+            newGame = true;
             break;
             case 12 :
             players[1].player_cash += 2;
             std::cout << "You rolled 12!\nYou lose!\n";
             winner = false;
+            newGame = true;
             break;
         }
     }
@@ -165,6 +170,7 @@ void Game::computeOutcome(std::string ph)
             std::cout << "You rolled 7!\nCraps!" << std::endl;
             players[1].player_cash += 2;
             winner = false;
+            newGame = true;
             phase == "comeout";
         }
         else if (result == marker)
@@ -172,11 +178,13 @@ void Game::computeOutcome(std::string ph)
             std::cout << "You rolled " << result << "!\nYou win!" << std::endl;
             players[0].player_cash += 2;
             winner = true;
+            newGame = true;
         }
         else
         {
             std::cout << "You rolled " << result << "!\nKeep going!" << std::endl;
             winner = false;
+            newGame = false;
         }
     }
 }
@@ -184,6 +192,11 @@ void Game::computeOutcome(std::string ph)
 bool Game::isWinner()
 {
     return winner;
+}
+
+bool Game::beginNewGame() const
+{
+    return newGame;
 }
 
 void Game::clearInput()
