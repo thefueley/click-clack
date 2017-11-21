@@ -33,8 +33,6 @@ int main()
                 case 'a' :
                     crapshoot.ante();
 
-                    //std::cin >> mymove;
-                    //crapshoot.clearInput();
                     crapshoot.comeoutRollMsg();
                     std::cin >> mymove;
                     crapshoot.clearInput();
@@ -56,7 +54,7 @@ int main()
                     break;
             }
         }
-        else // phase = point
+        else // point phase
         {
             crapshoot.pointMsg();
             std::cin >> mymove;

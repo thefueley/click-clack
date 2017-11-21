@@ -20,7 +20,6 @@ class Game
         void rollMsg() const;
         void rollDice();
         void computeOutcome(std::string);
-        bool isWinner();
         bool beginNewGame() const;
 
         void clearInput();
@@ -29,7 +28,6 @@ class Game
         std::vector<Player> players;
         int diceroll[2];
         int marker;
-        bool winner;
         bool newGame;
 };
 #endif // GAME_H
