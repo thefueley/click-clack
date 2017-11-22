@@ -9,8 +9,8 @@ Game::Game(Player &a, Player &b)
 {
     players.push_back(a);
     players.push_back(b);
-    diceroll[0] = 0;
-    diceroll[1] = 1;
+    diceroll.first = 0;
+    diceroll.second = 1;
     marker = 0;
 }
 
@@ -81,15 +81,15 @@ void Game::rollDice()
     //then just generate the integer like this:
     int compGuess = dist(engine);
 
-    diceroll[0] = compGuess;
+    diceroll.first = compGuess;
 
     compGuess = dist(engine);
-    diceroll[1] = compGuess;
+    diceroll.second = compGuess;
 }
 
 void Game::computeOutcome(std::string ph)
 {
-    int result = diceroll[0] + diceroll[1];
+    int result = diceroll.first + diceroll.second;
     std::string phase = ph;
     if (phase == "comeout")
     {

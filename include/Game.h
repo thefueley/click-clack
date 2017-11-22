@@ -26,7 +26,7 @@ class Game
 
     private:
         std::vector<Player> players;
-        int diceroll[2];
+        std::pair<int, int> diceroll;
         int marker;
         bool newGame;
 };
