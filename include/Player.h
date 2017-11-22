@@ -12,8 +12,6 @@ class Player
         Player() = default;
         Player(std::string);
         Player(std::string, int);
-        Player(const Player&);
-        Player& operator=(const Player&);
 
         void removePlayerCash(int);
 
