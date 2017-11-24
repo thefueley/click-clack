@@ -5,6 +5,16 @@
 #include <random>
 #include "Game.h"
 
+// random number stuff
+const int min = 1;
+const int max = 6;
+//the random device that will seed the generator
+std::random_device seeder;
+//then make a mersenne twister engine
+std::mt19937 engine(seeder());
+//then the easy part... the distribution
+std::uniform_int_distribution<int> dist(min, max);
+
 Game::Game(Player &a, Player &b)
 {
     players.push_back(a);
@@ -70,21 +80,8 @@ void Game::rollMsg() const
 
 void Game::rollDice()
 {
-    const int min = 1;
-    const int max = 6;
-    //the random device that will seed the generator
-    std::random_device seeder;
-    //then make a mersenne twister engine
-    std::mt19937 engine(seeder());
-    //then the easy part... the distribution
-    std::uniform_int_distribution<int> dist(min, max);
-    //then just generate the integer like this:
-    int compGuess = dist(engine);
-
-    diceroll.first = compGuess;
-
-    compGuess = dist(engine);
-    diceroll.second = compGuess;
+    diceroll.first = dist(engine);
+    diceroll.second = dist(engine);
 }
 
 void Game::computeOutcome(std::string ph)
