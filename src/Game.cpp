@@ -70,8 +70,8 @@ void Game::rollMsg() const
 
 void Game::rollDice()
 {
-    int min = 1;
-    int max = 6;
+    const int min = 1;
+    const int max = 6;
     //the random device that will seed the generator
     std::random_device seeder;
     //then make a mersenne twister engine
