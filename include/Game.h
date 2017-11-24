@@ -6,7 +6,7 @@
 
 class Game
 {
-    public:
+public:
         Game() = default;
         Game(Player&, Player&);
 
@@ -24,7 +24,7 @@ class Game
 
         void clearInput();
 
-    private:
+private:
         std::vector<Player> players;
         std::pair<int, int> diceroll;
         int marker;

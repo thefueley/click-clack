@@ -6,7 +6,7 @@
 class Player
 {
     friend std::ostream& operator<<(std::ostream&, const Player&);
-    public:
+public:
         friend class Game;
 
         Player() = default;
@@ -15,7 +15,7 @@ class Player
 
         void removePlayerCash(int);
 
-    private:
+private:
         std::string player_name;
         int player_cash;
 };
