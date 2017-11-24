@@ -24,9 +24,9 @@ void Game::showScore() const
 {
     std::cout << "\tGAME SCORE\n";
     std::cout << "############################\n";
-    for (auto it = players.begin(); it != players.end(); it++)
+    for (const Player& p : players)
     {
-        std::cout << *it;
+        std::cout << p;
     }
     std::cout << "############################\n";
 }
