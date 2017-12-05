@@ -15,19 +15,28 @@ std::mt19937 engine(seeder());
 //then the easy part... the distribution
 std::uniform_int_distribution<int> dist(min, max);
 
-Game::Game(Player &a, Player &b)
+Game::Game()
 {
-    players.push_back(a);
-    players.push_back(b);
+    CrapsFSM.initiate();
+}
+
+Game::Game(Player &human, Player &computer)
+{
+    players.push_back(human);
+    players.push_back(computer);
     diceroll.first = 0;
-    diceroll.second = 1;
+    diceroll.second = 0;
     marker = 0;
+    bank = 0;
+    CrapsFSM.initiate();
 }
 
 void Game::ante()
 {
-    players[0].player_cash -= 1;
-    players[1].player_cash -= 1;
+    players.at(0).cash -= 1;
+    players.at(1).cash -= 1;
+    bank += 2;
+    CrapsFSM.process_event(EvMoneyUp());
 }
 
 void Game::showScore() const
@@ -41,38 +50,19 @@ void Game::showScore() const
     std::cout << "############################\n";
 }
 
-Player& Game::getPlayer(std::string player)
-{
-    if (player == "human")
-    {
-        std::cout << "players[0] address: " << &players[0] << std::endl;
-        //return players[0];
-        return this->players[0];
-    }
-    else
-        return players[1];
-}
-
-void Game::comeoutMsg() const
+void Game::anteMsg() const
 {
     showScore();
     std::cout << "You may A) ante\tQ) quit\n";
 }
 
-void Game::pointMsg() const
-{
-    showScore();
-    std::cout << "POINT: " << marker << std::endl;
-    std::cout << "You may A) ante\tR) roll\n";
-}
-
-void Game::comeoutRollMsg() const
+void Game::rollMsg() const
 {
     std::cout << "POINT: NOT SET" << std::endl;
     std::cout << "R) to roll.\n";
 }
 
-void Game::rollMsg() const
+void Game::pointSetMsg() const
 {
     std::cout << "POINT: " << marker << std::endl;
     std::cout << "Locked in. Try to hit your point. R) to roll.\n";
@@ -84,97 +74,70 @@ void Game::rollDice()
     diceroll.second = dist(engine);
 }
 
-void Game::computeOutcome(std::string ph)
+void Game::computeOutcome()
 {
     int result = diceroll.first + diceroll.second;
-    std::string phase = ph;
-    if (phase == "comeout")
+    if (result == marker)
+        CrapsFSM.process_event(EvRollPoint());
+    // Didn't hit point so process
+    switch(result)
     {
-        switch(result)
+        case 2 :
         {
-            case 2 :
-            players[1].player_cash += 2;
-            std::cout << "You rolled 2!\nYou lose!\n";
-            newGame = true;
+            CrapsFSM.process_event(EvRoll2());
             break;
-            case 3 :
-            players[1].player_cash += 2;
-            std::cout << "You rolled 3!\nYou lose!\n";
-            newGame = true;
+        }
+        case 3 :
+        {
+            CrapsFSM.process_event(EvRoll3());
             break;
-            case 4 :
-            std::cout << "You rolled 4!\n";
-            marker = result;
-            newGame = false;
+        }
+        case 4 :
+        {
+            CrapsFSM.process_event(EvRoll4());
             break;
-            case 5 :
-            std::cout << "You rolled 5!\n";
-            marker = result;
-            newGame = false;
+        }
+        case 5 :
+        {
+            CrapsFSM.process_event(EvRoll5());
             break;
-            case 6 :
-            std::cout << "You rolled 6!\n";
-            marker = result;
-            newGame = false;
+        }
+        case 6 :
+        {
+            CrapsFSM.process_event(EvRoll6());
             break;
-            case 7 :
-            players[0].player_cash += 2;
-            std::cout << "You rolled 7!\nYou win!\n";
-            newGame = true;
+        }
+        case 7 :
+        {
+            CrapsFSM.process_event(EvRoll7());
             break;
-            case 8 :
-            std::cout << "You rolled 8!\n";
-            marker = result;
-            newGame = false;
+        }
+        case 8 :
+        {
+            CrapsFSM.process_event(EvRoll8());
             break;
-            case 9 :
-            std::cout << "You rolled 9!\n";
-            marker = result;
-            newGame = false;
+        }
+        case 9 :
+        {
+            CrapsFSM.process_event(EvRoll9());
             break;
-            case 10 :
-            std::cout << "You rolled 10!\n";
-            marker = result;
-            newGame = false;
+        }
+        case 10 :
+        {
+            CrapsFSM.process_event(EvRoll10());
             break;
-            case 11 :
-            players[0].player_cash += 2;
-            std::cout << "You rolled 11!\nYou win!\n";
-            newGame = true;
+        }
+        case 11 :
+        {
+            CrapsFSM.process_event(EvRoll11());
             break;
-            case 12 :
-            players[1].player_cash += 2;
-            std::cout << "You rolled 12!\nYou lose!\n";
-            newGame = true;
+        }
+        case 12 :
+        {
+            CrapsFSM.process_event(EvRoll12());
             break;
         }
     }
-    else if (phase == "point")
-    {
-        if (result == 7)
-        {
-            std::cout << "You rolled 7!\nCraps!" << std::endl;
-            players[1].player_cash += 2;
-            newGame = true;
-            phase == "comeout";
-        }
-        else if (result == marker)
-        {
-            std::cout << "You rolled " << result << "!\nYou win!" << std::endl;
-            players[0].player_cash += 2;
-            newGame = true;
-        }
-        else
-        {
-            std::cout << "You rolled " << result << "!\nKeep going!" << std::endl;
-            newGame = false;
-        }
-    }
-}
-
-bool Game::beginNewGame() const
-{
-    return newGame;
 }
 
 void Game::clearInput()

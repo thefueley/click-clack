@@ -16,8 +16,8 @@ public:
         void removePlayerCash(int);
 
 private:
-        std::string player_name;
-        int player_cash;
+        std::string name;
+        int cash;
 };
 
 #endif // PLAYER_H
