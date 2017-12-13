@@ -1,0 +1,65 @@
+#include <boost/statechart/event.hpp>
+#include <boost/statechart/state_machine.hpp>
+#include <boost/statechart/simple_state.hpp>
+#include <boost/statechart/transition.hpp>
+#include <iostream>
+
+// Events
+struct EvRoll : boost::statechart::event< EvRoll > {};
+
+// States forward-declared
+struct ST_Active; // Outer-State
+struct ST_Ante;
+struct ST_ComeOut;
+
+struct vAction
+{
+  virtual bool Status() const = 0;
+};
+
+// Machine
+struct Table : boost::statechart::state_machine< Table, Active >
+{
+    double ElapsedTime() const
+    {
+        return state_cast< const vAction & >().Status();
+    }
+};
+
+// States
+struct Idle : boost::statechart::simple_state< Idle, Light, LightOff >
+{
+public:
+    typedef boost::statechart::custom_reaction< EvRoll > reactions;
+
+    Idle() : status( false ) {}
+
+    bool Status() const { return status; }
+    bool & Status() { return status; }
+
+private:
+    bool status;
+};
+
+struct LightOn : vAction, boost::statechart::simple_state< LightOn, Idle >
+{
+public:
+    typedef boost::statechart::transition< EvFlip, LightOff > reactions;
+
+    LightOn() {}
+    ~LightOn()
+    {
+      context< Idle >().Status() = Status();
+    }
+
+    virtual bool Status() const
+    {
+      return context< Idle >().Status();
+    }
+};
+
+int main()
+{
+    Light myLight;
+}
+
