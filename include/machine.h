@@ -1,7 +1,7 @@
 #ifndef MACHINE_H
 #define MACHINE_H
 #include "machinestates.h"
-#include <tuple>
+#include <map>
 
 class AbstractState;
 
@@ -12,9 +12,12 @@ public:
     ~Machine();
     void anteUp(int quantity);
     void rollDice();
+    void printMenu();
+    int getPoint();
+    int getBank(int);
 
 private:
-    int mBanks[2];
+    std::map<std::string, int> mBank;
     int mPoint;
     AbstractState* mState;
 };

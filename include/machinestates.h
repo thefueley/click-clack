@@ -9,6 +9,7 @@ class AbstractState {
 public:
     virtual void anteUp(Machine& machine, int quantity) = 0;
     virtual void rollDice(Machine&) = 0;
+    virtual void printMenu(Machine&) const = 0;
     virtual ~AbstractState();
 
 protected:
@@ -16,6 +17,7 @@ protected:
     void updateBank(Machine& machine, int bank, int quantity);
     void setPoint(Machine& machine, int point);
     int getPoint(Machine& machine);
+    int getBank(Machine& machine, int bank);
 };
 
 class Ante : public AbstractState {
@@ -23,6 +25,7 @@ public:
     virtual ~Ante();
     virtual void anteUp(Machine& machine, int quantity);
     virtual void rollDice(Machine&);
+    virtual void printMenu(Machine&) const;
 };
 
 class ComeOut : public AbstractState {
@@ -30,6 +33,7 @@ public:
     virtual ~ComeOut();
     virtual void anteUp(Machine& machine, int quantity);
     virtual void rollDice(Machine&);
+    virtual void printMenu(Machine&) const;
 };
 
 class Point : public AbstractState {
@@ -37,6 +41,7 @@ public:
     virtual ~Point();
     virtual void anteUp(Machine& machine, int quantity);
     virtual void rollDice(Machine&);
+    virtual void printMenu(Machine&) const;
 };
 
 #endif // MACHINESTATES_H

@@ -3,8 +3,10 @@
 Machine::Machine() :
     mState(new Ante())
 {
-    mBanks[0] = 5;
-    mBanks[1] = 5;
+    mBank = {
+        {"KCR", 5},
+        {"CPU", 5}
+    };
 }
 
 Machine::~Machine() {
@@ -19,4 +21,21 @@ void Machine::anteUp(int quantity)
 void Machine::rollDice()
 {
     mState->rollDice(*this);
+}
+
+void Machine::printMenu()
+{
+    mState->printMenu(*this);
+}
+
+int Machine::getPoint()
+{
+    return mPoint;
+}
+
+int Machine::getBank(std::string player)
+{
+    if (player == "KCR")
+        return mBank.at("KCR")
+    return mBanks[bank];
 }
