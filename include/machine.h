@@ -14,7 +14,7 @@ public:
     void rollDice();
     void printMenu();
     int getPoint();
-    int getBank(int);
+    int getBank(Machine& machine, std::string);
 
 private:
     std::map<std::string, int> mBank;

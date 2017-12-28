@@ -33,9 +33,8 @@ int Machine::getPoint()
     return mPoint;
 }
 
-int Machine::getBank(std::string player)
+int Machine::getBank(Machine& machine, std::string player)
 {
-    if (player == "KCR")
-        return mBank.at("KCR")
-    return mBanks[bank];
+    auto search =  machine.mBank.find(player);
+    return search->second;
 }

@@ -4,8 +4,8 @@
 #include <random>
 
 // random number stuff
-const int min = 1;
-const int max = 6;
+const int min = 2;
+const int max = 12;
 //the random device that will seed the generator
 std::random_device seeder;
 //then make a mersenne twister engine
@@ -22,9 +22,10 @@ void AbstractState::setState(Machine& machine, AbstractState* state) {
     delete aux;
 }
 
-void AbstractState::updateBank(Machine& machine, int bank, int quantity)
+void AbstractState::updateBank(Machine& machine, std::string player, int quantity)
 {
-    machine.mBanks[bank] += quantity;
+    auto search = machine.mBank.find(player);
+    search->second += quantity;
 }
 
 void AbstractState::setPoint(Machine& machine, int point)
@@ -37,17 +38,18 @@ int AbstractState::getPoint(Machine& machine)
     return machine.mPoint;
 }
 
-int AbstractState::getBank(Machine& machine, int bank)
+int AbstractState::getBank(Machine& machine, std::string player)
 {
-    return machine.mBanks[bank];
+    auto search = machine.mBank.find(player);
+    return search->second;
 }
 
 Ante::~Ante() {}
 
 void Ante::anteUp(Machine& machine, int quantity)
 {
-    updateBank(machine, 0, -1);
-    updateBank(machine, 1, -1);
+    updateBank(machine, "KCR", -1);
+    updateBank(machine, "CPU", -1);
     setState(machine, new ComeOut());
 }
 
@@ -69,36 +71,36 @@ void ComeOut::anteUp(Machine& machine, int quantity) {
 
 void ComeOut::rollDice(Machine& machine)
 {
-    int roll = dist(engine) + dist(engine);
+    int roll = dist(engine);
     switch(roll)
     {
         case 2 :
         case 3 :
         case 12 :
-        std::cout << "Rolled " << roll << " ... Craps!" << std::endl;
-        break;
+            std::cout << "Rolled " << roll << " ... Craps!" << std::endl;
+            break;
         case 7 :
         case 11 :
-        std::cout << "Rolled " << roll << " ... Winner!" << std::endl;
-        setState(machine, new Ante());
-        break;
+            std::cout << "Rolled " << roll << " ... Winner!" << std::endl;
+            setState(machine, new Ante());
+            break;
         case 4 :
         case 5 :
         case 6 :
         case 8 :
         case 9 :
         case 10 :
-        std::cout << "Rolled " << roll << std::endl;
-        setPoint(machine, roll);
-        setState(machine, new Point());
-        break;
+            std::cout << "Rolled " << roll << std::endl;
+            setPoint(machine, roll);
+            setState(machine, new Point());
+            break;
     }
 }
 
 void ComeOut::printMenu(Machine& machine) const
 {
     std::cout << "Ante set." << std::endl;
-    std::cout << "Human: " << machine.getBank(0) << " CPU: " << machine.getBank(1) << std::endl;
+    std::cout << "Human: " << machine.getBank(machine, "KCR") << " CPU: " << machine.getBank(machine, "CPU") << std::endl;
     std::cout << "Point: Not Set" << std::endl;
     std::cout << "R) to roll" << std::endl;
 }
@@ -111,17 +113,17 @@ void Point::anteUp(Machine& machine, int quantity) {
 
 void Point::rollDice(Machine& machine)
 {
-    int roll = dist(engine) + dist(engine);
+    int roll = dist(engine);
     if (roll == getPoint(machine))
     {
         std::cout << "Rolled your point!\n";
-        updateBank(machine, 0, 2);
+        updateBank(machine, "KCR", 2);
         setState(machine, new Ante());
     }
     else if (roll == 7)
     {
         std::cout << "Rolled " << roll << " ... Craps!" << std::endl;
-        updateBank(machine, 1, 2);
+        updateBank(machine, "CPU", 2);
         setState(machine, new Ante());
     }
     else

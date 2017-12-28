@@ -2,6 +2,7 @@
 #define MACHINESTATES_H
 
 #include "machine.h"
+#include <string>
 
 class Machine;
 
@@ -14,10 +15,10 @@ public:
 
 protected:
     void setState(Machine& machine, AbstractState* st);
-    void updateBank(Machine& machine, int bank, int quantity);
+    void updateBank(Machine& machine, std::string player, int quantity);
     void setPoint(Machine& machine, int point);
     int getPoint(Machine& machine);
-    int getBank(Machine& machine, int bank);
+    int getBank(Machine& machine, std::string player);
 };
 
 class Ante : public AbstractState {
