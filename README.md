@@ -10,12 +10,12 @@ To help me learn some C++ basics outside of canned examples in books.
 Add input validation on player responses.  
 Add limit on odds bets to 3 x ante.  
 Add a check to see if player has enough money to ante.  
-Add a game pot and payout from this pot.  
-Add screen updates using ncurses ... One day.
+Add option for player to enter name.
+Add option for player to enter starting bank.
 
 ## Installation
 
-Just compile it using g++, for example. g++ Player.h Player.cpp Game.h Game.cpp main.cpp -o craps
+Just compile it using g++, for example. g++ machine.h machinestates.h machine.cpp machinestate.cpp  main.cpp -o craps
 
 ## Contributors
 

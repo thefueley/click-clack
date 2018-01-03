@@ -1,82 +1,32 @@
 #include <iostream>
-#include <string>
-#include <limits>
-#include "Game.h"
-#include "Player.h"
+#include <stdexcept>
+#include "machine.h"
+#include "machinestates.h"
 
 int main()
 {
-    std::cout << "Welcome to Click-Clack, a version of street craps\n";
-    std::string human;
-    std::cout << "What is your name?\n";
-    std::cin >> human;
-    std::cout << "Okay, " << human << ", let's get started\n";
+    Machine m;
 
-    Player me(human, 5);
-    Player comp("CPU", 5);
-
-    Game crapshoot(me, comp);
-
-    char mymove;
-    std::string phase("comeout");
+    char input;
     do
     {
-        if (phase == "comeout")
+        m.printMenu();
+        std::cin >> input;
+
+        switch(input)
         {
-            crapshoot.comeoutMsg();
-            std::cin >> mymove;
-            crapshoot.clearInput();
-
-            switch(mymove)
-            {
-                case 'A' :
-                case 'a' :
-                    crapshoot.ante();
-
-                    crapshoot.comeoutRollMsg();
-                    std::cin >> mymove;
-                    crapshoot.clearInput();
-                    crapshoot.rollDice();
-                    crapshoot.computeOutcome("comeout");
-                    if (crapshoot.beginNewGame())
-                    {
-                        phase = "comeout";
-                        crapshoot.showScore();
-                    }
-                    else
-                    {
-                        phase = "point";
-                    }
-                    break;
-                case 'Q' :
-                case 'q' :
-                    crapshoot.showScore();
-                    break;
-            }
+            case 'a' :
+            case 'A' :
+                m.anteUp(1);
+                break;
+            case 'r' :
+            case 'R' :
+                //m.printMenu();
+                m.rollDice();
+                break;
         }
-        else // point phase
-        {
-            crapshoot.pointMsg();
-            std::cin >> mymove;
-            crapshoot.clearInput();
+        m.clearInput();
+    } while (input != 'q' && input != 'Q');
 
-            switch(mymove)
-            {
-                case 'A' :
-                case 'a' :
-                    crapshoot.ante();
-                    break;
-                case 'R' :
-                case 'r' :
-                    crapshoot.rollDice();
-                    crapshoot.computeOutcome("point");
-                    if (crapshoot.beginNewGame())
-                        phase = "comeout";
-                    else
-                        phase = "point";
-                    break;
-            }
-        }
-    } while (mymove != 'q' && mymove != 'Q');
     return 0;
 }
