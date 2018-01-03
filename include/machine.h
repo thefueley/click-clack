@@ -15,6 +15,7 @@ public:
     void printMenu();
     int getPoint();
     int getBank(Machine& machine, std::string);
+    void clearInput();
 
 private:
     std::map<std::string, int> mBank;

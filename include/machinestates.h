@@ -21,6 +21,14 @@ protected:
     int getBank(Machine& machine, std::string player);
 };
 
+class Idle : public AbstractState {
+public:
+    virtual ~Idle();
+    virtual void anteUp(Machine& machine, int quantity);
+    virtual void rollDice(Machine&);
+    virtual void printMenu(Machine&) const;
+};
+
 class Ante : public AbstractState {
 public:
     virtual ~Ante();

@@ -1,4 +1,6 @@
 #include "machine.h"
+#include <iostream>
+#include <limits>
 
 Machine::Machine() :
     mState(new Ante())
@@ -16,6 +18,12 @@ Machine::~Machine() {
 void Machine::anteUp(int quantity)
 {
     mState->anteUp(*this, quantity);
+}
+
+void Machine::clearInput()
+{
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.clear();
 }
 
 void Machine::rollDice()
