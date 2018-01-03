@@ -10,8 +10,8 @@ To help me learn some C++ basics outside of canned examples in books.
 Add input validation on player responses.  
 Add limit on odds bets to 3 x ante.  
 Add a check to see if player has enough money to ante.  
-Add option for player to enter name.
-Add option for player to enter starting bank.
+Add option for player to enter name.  
+Add option for player to enter starting bank.  
 
 ## Installation
 
