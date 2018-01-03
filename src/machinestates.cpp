@@ -44,24 +44,6 @@ int AbstractState::getBank(Machine& machine, std::string player)
     return search->second;
 }
 
-Idle::~Idle() {}
-
-void Idle::anteUp(Machine& machine, int quantity)
-{
-    setState(machine, new Ante());
-}
-
-void Idle::rollDice(Machine& machine)
-{
-    std::cout << "rollDice from Idle. Illegal." << std::endl;
-}
-
-void Idle::printMenu(Machine& machine) const
-{
-    std::cout << "Idle::printMenu\n";
-    //std::cout << "Human: " << machine.getBank(machine, "KCR") << " CPU: " << machine.getBank(machine, "CPU") << std::endl;
-}
-
 Ante::~Ante() {}
 
 void Ante::anteUp(Machine& machine, int quantity)
@@ -78,7 +60,7 @@ void Ante::rollDice(Machine& machine)
 
 void Ante::printMenu(Machine& machine) const
 {
-    std::cout << "Ante::printMenu\n";
+    std::cout << "Human: " << machine.getBank(machine, "KCR") << "\tCPU: " << machine.getBank(machine, "CPU") << std::endl;
     std::cout << "You may A) Ante or Q) Quit" << std::endl;
 }
 
@@ -97,12 +79,14 @@ void ComeOut::rollDice(Machine& machine)
         case 3 :
         case 12 :
             std::cout << "Rolled " << roll << " ... Craps!" << std::endl;
-            setState(machine, new Idle());
+            updateBank(machine, "CPU", 2);
+            setState(machine, new Ante());
             break;
         case 7 :
         case 11 :
             std::cout << "Rolled " << roll << " ... Winner!" << std::endl;
-            setState(machine, new Idle());
+            updateBank(machine, "KCR", 2);
+            setState(machine, new Ante());
             break;
         case 4 :
         case 5 :
@@ -119,9 +103,8 @@ void ComeOut::rollDice(Machine& machine)
 
 void ComeOut::printMenu(Machine& machine) const
 {
-    std::cout << "ComeOut::printMenu\n";
     std::cout << "Ante set.\tPoint: Not Set." << std::endl;
-    std::cout << "Human: " << machine.getBank(machine, "KCR") << " CPU: " << machine.getBank(machine, "CPU") << std::endl;
+    std::cout << "Human: " << machine.getBank(machine, "KCR") << "\tCPU: " << machine.getBank(machine, "CPU") << std::endl;
     std::cout << "R) to roll" << std::endl;
 }
 
@@ -154,7 +137,6 @@ void Point::rollDice(Machine& machine)
 
 void Point::printMenu(Machine& machine) const
 {
-    std::cout << "Point::printMenu\n";
     std::cout << "Point: " << machine.getPoint() << std::endl;
     std::cout << "R) to roll" << std::endl;
 }

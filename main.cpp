@@ -21,7 +21,7 @@ int main()
                 break;
             case 'r' :
             case 'R' :
-                m.printMenu();
+                //m.printMenu();
                 m.rollDice();
                 break;
         }
