@@ -15,7 +15,7 @@ Add option for player to enter starting bank.
 
 ## Installation
 
-Just compile it using g++, for example. g++ machine.h machinestates.h machine.cpp machinestate.cpp  main.cpp -o craps
+Compile with g++, e.g., g++ machine.h machinestates.h machine.cpp machinestate.cpp  main.cpp -o craps
 
 ## Contributors
 
@@ -27,3 +27,5 @@ MIT License
 
 A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code.
 
+# Archive
+Archiving this repo as I'm no longer working on it. Leaving TODO items there for the future, in case I return to it.
